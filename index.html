@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>致我最爱的人</title>
+    <meta property="og:title" content="给最特别的你">
+    <meta property="og:description" content="一个特别的惊喜">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>❤️</text></svg>">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            margin: 0;
+            background-color: #ffd6e7;
+            position: relative;
+            overflow: hidden;
+        }
+        .container {
+            text-align: center;
+            z-index: 1;
+        }
+        h1 {
+            color: #ff4081;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+        }
+        .buttons {
+            margin: 20px;
+        }
+        button {
+            padding: 15px 30px;
+            font-size: 18px;
+            margin: 10px;
+            cursor: pointer;
+            border: none;
+            border-radius: 25px;
+            transition: transform 0.3s;
+        }
+        #yesBtn {
+            background-color: #ff4081;
+            color: white;
+        }
+        #noBtn {
+            background-color: #gray;
+            color: white;
+        }
+        .heart {
+            position: absolute;
+            pointer-events: none;
+            animation: float 4s ease-in-out infinite;
+            opacity: 0;
+        }
+        @keyframes float {
+            0% { transform: translateY(0) scale(1); opacity: 1; }
+            100% { transform: translateY(-100vh) scale(0); opacity: 0; }
+        }
+        .firework {
+            position: absolute;
+            width: 5px;
+            height: 5px;
+            border-radius: 50%;
+            pointer-events: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>亲爱的，你愿意嫁给我吗？</h1>
+        <div class="buttons">
+            <button id="yesBtn" onclick="accepted()">愿意</button>
+            <button id="noBtn" onmouseover="moveButton(this)">不愿意</button>
+        </div>
+        <p id="message"></p>
+    </div>
+    <script src="t1.js"></script>
+</body>
+</html> 
