@@ -1,3 +1,35 @@
+// 在文件开头添加全局变量
+let bgMusic = new Audio('./bgMusic.mp3');
+bgMusic.loop = true;
+bgMusic.volume = 0.5;
+let isMusicPlaying = false;
+
+// 添加照片配置
+const photos = [
+    './photo/1.jpg',
+    './photo/2.jpg',
+    './photo/3.jpg'
+];
+
+let currentPhotoIndex = 0;
+
+function changeBackground() {
+    const imgContainer = document.getElementById('photoContainer');
+    const currentPhoto = photos[currentPhotoIndex];
+    
+    // 添加图片加载错误处理
+    const img = new Image();
+    img.onload = function() {
+        imgContainer.style.backgroundImage = `url(${currentPhoto})`;
+    };
+    img.onerror = function() {
+        console.error(`图片加载失败: ${currentPhoto}`);
+    };
+    img.src = currentPhoto;
+    
+    currentPhotoIndex = (currentPhotoIndex + 1) % photos.length;
+}
+
 function moveButton(button) {
     // 随机移动"不愿意"按钮的位置
     const x = Math.random() * (window.innerWidth - button.offsetWidth);
@@ -41,17 +73,26 @@ function createFirework() {
 }
 
 function accepted() {
-    document.getElementById('noBtn').style.display = 'none';
+    // 隐藏所有按钮
+    const buttonContainer = document.querySelector('.button-container');
+    if (buttonContainer) {
+        buttonContainer.style.display = 'none';
+    }
+    
     document.getElementById('message').innerHTML = '我爱你！❤️';
     
     // 创建心形和烟花效果
     setInterval(createHeart, 300);
     setInterval(createFirework, 500);
     
-    // 添加背景音乐（白小白《我爱你不问归期》）
-    const audio = new Audio('https://music.163.com/song/media/outer/url?id=1325896374.mp3');
-    audio.volume = 0.5; // 设置音量为一半
-    audio.play();
+    // 开始照片轮播
+    setInterval(changeBackground, 3000);
+    
+    // 只有在音乐未播放时才开始播放
+    if (!isMusicPlaying) {
+        bgMusic.play();
+        isMusicPlaying = true;
+    }
     
     // 添加点击特效
     document.addEventListener('click', function(e) {
@@ -66,15 +107,17 @@ function accepted() {
     });
 }
 
-// 页面加载时自动播放背景音乐
+// 页面加载时的初始化
 window.onload = function() {
-    const bgMusic = new Audio('https://music.163.com/song/media/outer/url?id=1325896374.mp3');
-    bgMusic.loop = true; // 循环播放
-    bgMusic.volume = 0.5; // 设置音量为一半
+    // 设置初始背景
+    changeBackground();
     
-    // 添加点击事件监听器来开始播放音乐（因为大多数浏览器需要用户交互才能自动播放）
+    // 只在第一次点击时播放音乐
     document.addEventListener('click', function startMusic() {
-        bgMusic.play();
+        if (!isMusicPlaying) {
+            bgMusic.play();
+            isMusicPlaying = true;
+        }
         document.removeEventListener('click', startMusic);
     }, { once: true });
 }
